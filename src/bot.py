@@ -62,9 +62,9 @@ def alarma(update, context):
         schedule.every(1).minutes.do(run_threaded, remainder, context,
                                      update.effective_chat.id, message)
 
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
+        # while True:
+        #     schedule.run_pending()
+        #     time.sleep(1)
 
     except:
         context.bot.send_message(
@@ -81,10 +81,10 @@ def run_threaded(job_func, context, chat_id, message):
     job_thread.start()
 
 
-# def pending():
-#     while True:
-#         schedule.run_pending()
-#         time.sleep(1)
+def pending():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 def unknown(update, context):
@@ -115,8 +115,8 @@ if __name__ == '__main__':
     unknown_handler = MessageHandler(Filters.command, unknown)
     dispatcher.add_handler(unknown_handler)
 
-    # pending_thread = threading.Thread(target=pending)
-    # pending_thread.start()
+    pending_thread = threading.Thread(target=pending)
+    pending_thread.start()
 
     updater.start_polling()
     updater.idle()
